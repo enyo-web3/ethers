@@ -1,0 +1,66 @@
+{
+  "name": "@enyo-web3/core",
+  "version": "0.1.0",
+  "description": "Enyo supergraph core",
+  "homepage": "https://github.com/enyo-web3/core",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enyo-web3/core.git"
+  },
+  "main": "dist/index.js",
+  "types": "dist",
+  "scripts": {
+    "build": "rollup --config rollup.config.js",
+    "dev": "rollup --config rollup.config.js --watch --no-watch.clearScreen",
+    "prepublish": "yarn build",
+    "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
+    "fix": "yarn lint --fix --report-unused-disable-directives",
+    "test": "jest"
+  },
+  "author": "Metaphor",
+  "license": "MIT",
+  "peerDependencies": {
+    "@apollo/client": "^3",
+    "graphql": "^14 || ^15 || ^16",
+    "react": "^16.8.0 || ^17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@apollo/client": "^3.0.0",
+    "@babel/core": "^7.16.5",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-react": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.5",
+    "@babel/runtime": "^7.17.9",
+    "@enyo-web3/core": "^0.1.0",
+    "@metaphor-xyz/eslint-config": "^2.1.0",
+    "@rollup/plugin-typescript": "^8.3.0",
+    "@rushstack/eslint-patch": "^1.1.2",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@types/jest": "^27.0.3",
+    "@types/react": "^16.8.0",
+    "eslint": "^8.13.0",
+    "graphql": "^16",
+    "jest": "^27.4.5",
+    "react": "^16.8.0",
+    "react-test-renderer": "^17.0.2",
+    "rollup": "^2.64.0",
+    "rollup-plugin-node-externals": "^4.0.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.6.0"
+  },
+  "dependencies": {
+    "@ethersproject/abi": "^5.6.0",
+    "@graphql-tools/schema": "^8.3.6",
+    "ethers": "^5.6.2"
+  },
+  "resolutions": {
+    "@enyo-web3/core": "link:../core"
+  },
+  "packageManager": "yarn@3.2.0"
+}
