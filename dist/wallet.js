@@ -9,19 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EthersWalletSubgraph = void 0;
+exports.WalletSubgraph = void 0;
 const client_1 = require("@apollo/client");
+const core_1 = require("@enyo-web3/core");
 const schema_1 = require("@graphql-tools/schema");
-class EthersWalletSubgraph {
+class WalletSubgraph extends core_1.EnyoSubgraph {
     constructor() {
+        super();
         this.ensNames = {};
     }
     schema(providers) {
         const ethersProvider = providers.ethers;
-        const cache = providers.cache;
         const ensNames = this.ensNames;
         const updateWallet = () => {
-            cache.writeQuery({
+            this.writeQuery({
                 query: (0, client_1.gql) `
           query SetWalletData {
             wallet {
@@ -49,7 +50,7 @@ class EthersWalletSubgraph {
                     ensNames[ethersProvider.mainAccount.toLowerCase()] = ensName;
                 }
             }
-            cache.writeQuery({
+            this.writeQuery({
                 query: (0, client_1.gql) `
           query SetAccountData {
             wallet {
@@ -145,5 +146,5 @@ class EthersWalletSubgraph {
     `;
     }
 }
-exports.EthersWalletSubgraph = EthersWalletSubgraph;
+exports.WalletSubgraph = WalletSubgraph;
 //# sourceMappingURL=wallet.js.map

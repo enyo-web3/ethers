@@ -1,23 +1,24 @@
 import { gql } from '@apollo/client';
-import type { EnyoSubgraph, ProvidersWithCache } from '@enyo-web3/core';
+import { EnyoSubgraph } from '@enyo-web3/core';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 
 import type { ProvidersWithEthers } from './provider';
 
-export class EthersWalletSubgraph implements EnyoSubgraph<ProvidersWithEthers & ProvidersWithCache> {
+export class WalletSubgraph extends EnyoSubgraph<ProvidersWithEthers> {
   ensNames: Record<string, string>;
 
   constructor() {
+    super();
+
     this.ensNames = {};
   }
 
-  schema(providers: ProvidersWithEthers & ProvidersWithCache) {
+  schema(providers: ProvidersWithEthers) {
     const ethersProvider = providers.ethers;
-    const cache = providers.cache;
     const ensNames = this.ensNames;
 
     const updateWallet = () => {
-      cache.writeQuery({
+      this.writeQuery({
         query: gql`
           query SetWalletData {
             wallet {
@@ -48,7 +49,7 @@ export class EthersWalletSubgraph implements EnyoSubgraph<ProvidersWithEthers & 
         }
       }
 
-      cache.writeQuery({
+      this.writeQuery({
         query: gql`
           query SetAccountData {
             wallet {
