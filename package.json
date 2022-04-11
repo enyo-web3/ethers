@@ -10,8 +10,7 @@
   "main": "dist/index.js",
   "types": "dist",
   "scripts": {
-    "build": "rollup --config rollup.config.js",
-    "dev": "rollup --config rollup.config.js --watch --no-watch.clearScreen",
+    "build": "tsc",
     "prepublish": "yarn build",
     "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
     "fix": "yarn lint --fix --report-unused-disable-directives",
@@ -38,7 +37,7 @@
     "@babel/preset-react": "^7.16.5",
     "@babel/preset-typescript": "^7.16.5",
     "@babel/runtime": "^7.17.9",
-    "@enyo-web3/core": "https://github.com/enyo-web3/core",
+    "@enyo-web3/core": "https://github.com/enyo-web3/core#branch=main",
     "@metaphor-xyz/eslint-config": "^2.1.0",
     "@rollup/plugin-typescript": "^8.3.0",
     "@rushstack/eslint-patch": "^1.1.2",
