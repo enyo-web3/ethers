@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,9 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { Interface } from '@ethersproject/abi';
-import { ethers } from 'ethers';
-import Multicall from './Multicall.json';
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EthersProvider = void 0;
+const abi_1 = require("@ethersproject/abi");
+const ethers_1 = require("ethers");
+const Multicall_json_1 = __importDefault(require("./Multicall.json"));
 const multicallAddresses = {
     mainnet: '0xeefba1e63905ef1d7acba5a8513c70307c1ce441',
     ropsten: '0x53c43764255c17bd724f74c4ef150724ac50a3ed',
@@ -17,32 +23,32 @@ const multicallAddresses = {
 };
 const networks = {
     mainnet: {
-        chainId: ethers.utils.hexValue(1),
+        chainId: ethers_1.ethers.utils.hexValue(1),
         chainName: 'Ethereum Mainet',
         nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
         rpcUrls: ['https://mainnet.infura.io'],
     },
     ropsten: {
-        chainId: ethers.utils.hexValue(3),
+        chainId: ethers_1.ethers.utils.hexValue(3),
         chainName: 'Ropsten',
         nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
         rpcUrls: ['https://ropsten.infura.io'],
     },
     polygon: {
-        chainId: ethers.utils.hexValue(137),
+        chainId: ethers_1.ethers.utils.hexValue(137),
         chainName: 'Polygon',
         nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
         rpcUrls: ['https://rpc-mainnet.matic.network'],
     },
     local: {
-        chainId: ethers.utils.hexValue(1337),
+        chainId: ethers_1.ethers.utils.hexValue(1337),
         chainName: 'localhost',
         nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
         rpcUrls: ['http://localhost:8545'],
     },
 };
 const CACHED_PROVIDER_KEY = 'ethers_cached_provider';
-export class EthersProvider extends EventTarget {
+class EthersProvider extends EventTarget {
     constructor(options) {
         super();
         this.connecting = false;
@@ -50,7 +56,7 @@ export class EthersProvider extends EventTarget {
         this.rpcTokens = (options === null || options === void 0 ? void 0 : options.rpcTokens) || null;
         this.connectors = Object.assign({ metamask: () => __awaiter(this, void 0, void 0, function* () {
                 // @ts-ignore
-                const provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
+                const provider = new ethers_1.ethers.providers.Web3Provider(window.ethereum, 'any');
                 yield provider.send('eth_requestAccounts', []);
                 return provider;
             }) }, options === null || options === void 0 ? void 0 : options.connectors);
@@ -101,8 +107,8 @@ export class EthersProvider extends EventTarget {
     }
     getProvider(network) {
         return network === 'local' || (!network && (!this.desiredNetwork || this.desiredNetwork === 'local'))
-            ? new ethers.providers.JsonRpcProvider('http://localhost:8545')
-            : ethers.getDefaultProvider(network || this.desiredNetwork, this.rpcTokens);
+            ? new ethers_1.ethers.providers.JsonRpcProvider('http://localhost:8545')
+            : ethers_1.ethers.getDefaultProvider(network || this.desiredNetwork, this.rpcTokens);
     }
     getSigner(network) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -112,7 +118,7 @@ export class EthersProvider extends EventTarget {
             const provider = this.provider;
             const networkParams = networks[network || this.desiredNetwork];
             const currentNetwork = yield (provider === null || provider === void 0 ? void 0 : provider.getNetwork());
-            const currentNetworkChainId = ethers.utils.hexValue((currentNetwork === null || currentNetwork === void 0 ? void 0 : currentNetwork.chainId) || -1);
+            const currentNetworkChainId = ethers_1.ethers.utils.hexValue((currentNetwork === null || currentNetwork === void 0 ? void 0 : currentNetwork.chainId) || -1);
             if (provider) {
                 yield this.switchingNetwork;
                 if (currentNetworkChainId !== networkParams.chainId) {
@@ -145,7 +151,7 @@ export class EthersProvider extends EventTarget {
                     }
                 }
                 const newNetwork = yield provider.getNetwork();
-                const newChainId = ethers.utils.hexValue(newNetwork.chainId);
+                const newChainId = ethers_1.ethers.utils.hexValue(newNetwork.chainId);
                 if (newChainId !== networkParams.chainId) {
                     throw new Error('could not set new network! Set network to Localhost manually.');
                 }
@@ -160,8 +166,8 @@ export class EthersProvider extends EventTarget {
                 throw new Error(`no multicall contract registered for network ${network}`);
             }
             const provider = this.getProvider(network);
-            const multicall = new ethers.Contract(multicallAddress, Multicall.abi, provider);
-            const contractInterface = new Interface(abi);
+            const multicall = new ethers_1.ethers.Contract(multicallAddress, Multicall_json_1.default.abi, provider);
+            const contractInterface = new abi_1.Interface(abi);
             const multicallCalls = calls.map(c => ({
                 target: c.target,
                 callData: contractInterface.encodeFunctionData(c.functionName, c.functionArguments),
@@ -197,4 +203,5 @@ export class EthersProvider extends EventTarget {
         }
     }
 }
+exports.EthersProvider = EthersProvider;
 //# sourceMappingURL=provider.js.map

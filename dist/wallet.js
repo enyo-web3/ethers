@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,9 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { gql } from '@apollo/client';
-import { makeExecutableSchema } from '@graphql-tools/schema';
-export class EthersWalletSubgraph {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EthersWalletSubgraph = void 0;
+const client_1 = require("@apollo/client");
+const schema_1 = require("@graphql-tools/schema");
+class EthersWalletSubgraph {
     constructor() {
         this.ensNames = {};
     }
@@ -19,7 +22,7 @@ export class EthersWalletSubgraph {
         const ensNames = this.ensNames;
         const updateWallet = () => {
             cache.writeQuery({
-                query: gql `
+                query: (0, client_1.gql) `
           query SetWalletData {
             wallet {
               mainAccount
@@ -47,7 +50,7 @@ export class EthersWalletSubgraph {
                 }
             }
             cache.writeQuery({
-                query: gql `
+                query: (0, client_1.gql) `
           query SetAccountData {
             wallet {
               mainAccount
@@ -67,7 +70,7 @@ export class EthersWalletSubgraph {
         ethersProvider.addEventListener('changeProvider', updateWallet);
         ethersProvider.addEventListener('changeMainAccount', updateAccount);
         ethersProvider.addEventListener('connecting', updateWallet);
-        return makeExecutableSchema({
+        return (0, schema_1.makeExecutableSchema)({
             typeDefs: this.typeDefs(),
             resolvers: {
                 Query: {
@@ -112,7 +115,7 @@ export class EthersWalletSubgraph {
         });
     }
     typeDefs() {
-        return gql `
+        return (0, client_1.gql) `
       type Query {
         wallet: Wallet!
       }
@@ -142,4 +145,5 @@ export class EthersWalletSubgraph {
     `;
     }
 }
+exports.EthersWalletSubgraph = EthersWalletSubgraph;
 //# sourceMappingURL=wallet.js.map
