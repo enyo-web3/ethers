@@ -38,7 +38,7 @@
     "@babel/preset-react": "^7.16.5",
     "@babel/preset-typescript": "^7.16.5",
     "@babel/runtime": "^7.17.9",
-    "@enyo-web3/core": "^0.1.0",
+    "@enyo-web3/core": "https://github.com/enyo-web3/core",
     "@metaphor-xyz/eslint-config": "^2.1.0",
     "@rollup/plugin-typescript": "^8.3.0",
     "@rushstack/eslint-patch": "^1.1.2",
@@ -61,9 +61,6 @@
     "@ethersproject/abi": "^5.6.0",
     "@graphql-tools/schema": "^8.3.6",
     "ethers": "^5.6.2"
-  },
-  "resolutions": {
-    "@enyo-web3/core": "link:../core"
   },
   "packageManager": "yarn@3.2.0"
 }
