@@ -245,13 +245,13 @@ export class EthersProvider extends EventTarget implements EnyoProvider {
     }
   }
 
-  private restoreCachedProvider() {
+  private async restoreCachedProvider() {
     if (typeof window !== 'undefined' && 'localStorage' in window) {
       const cachedProviderType = window.localStorage.getItem(CACHED_PROVIDER_KEY);
 
       if (cachedProviderType) {
         try {
-          this.connectProvider(cachedProviderType);
+          await this.connectProvider(cachedProviderType);
         } catch {
           this.removeCachedProvider();
         }

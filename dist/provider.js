@@ -190,17 +190,19 @@ class EthersProvider extends EventTarget {
         }
     }
     restoreCachedProvider() {
-        if (typeof window !== 'undefined' && 'localStorage' in window) {
-            const cachedProviderType = window.localStorage.getItem(CACHED_PROVIDER_KEY);
-            if (cachedProviderType) {
-                try {
-                    this.connectProvider(cachedProviderType);
-                }
-                catch (_a) {
-                    this.removeCachedProvider();
+        return __awaiter(this, void 0, void 0, function* () {
+            if (typeof window !== 'undefined' && 'localStorage' in window) {
+                const cachedProviderType = window.localStorage.getItem(CACHED_PROVIDER_KEY);
+                if (cachedProviderType) {
+                    try {
+                        yield this.connectProvider(cachedProviderType);
+                    }
+                    catch (_a) {
+                        this.removeCachedProvider();
+                    }
                 }
             }
-        }
+        });
     }
     removeCachedProvider() {
         if (typeof window !== 'undefined' && 'localStorage' in window) {
