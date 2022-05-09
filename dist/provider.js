@@ -193,7 +193,12 @@ class EthersProvider extends EventTarget {
         if (typeof window !== 'undefined' && 'localStorage' in window) {
             const cachedProviderType = window.localStorage.getItem(CACHED_PROVIDER_KEY);
             if (cachedProviderType) {
-                this.connectProvider(cachedProviderType);
+                try {
+                    this.connectProvider(cachedProviderType);
+                }
+                catch (_a) {
+                    this.removeCachedProvider();
+                }
             }
         }
     }
